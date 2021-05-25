@@ -23,7 +23,7 @@ public class PrincipalController {
         this.view = view;
     }
     
-    public void exibeProdutos(){
+    public void exibeProdutos() throws SQLException{
         Produtos p = new Produtos();
         p.setVisible(true);
         view.dispose();
