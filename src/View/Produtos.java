@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import model.Produto;
 import Dao.ProdutoDAO;
 import controller.ProdutosController;
-import dao.Conexao;
+import Dao.Conexao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -231,6 +231,11 @@ public class Produtos extends javax.swing.JFrame {
         jButton7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("Excluir");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 110, 130, 40));
 
         pack();
@@ -274,6 +279,12 @@ public class Produtos extends javax.swing.JFrame {
         cp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        ExcluirProduto ep = new ExcluirProduto();
+        ep.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments

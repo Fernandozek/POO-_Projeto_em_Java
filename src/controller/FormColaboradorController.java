@@ -4,7 +4,7 @@ package controller;
 import Dao.ColaboradorDAO;
 import Dao.UsuarioDAO;
 import View.CadastrarColaborador;
-import dao.Conexao;
+import Dao.Conexao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;

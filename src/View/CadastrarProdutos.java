@@ -67,7 +67,6 @@ public class CadastrarProdutos extends javax.swing.JFrame {
         jComboBoxCategoria = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(928, 626));
 
         jPanel1.setBackground(new java.awt.Color(119, 1, 100));
         jPanel1.setPreferredSize(new java.awt.Dimension(256, 626));
@@ -415,14 +414,6 @@ public class CadastrarProdutos extends javax.swing.JFrame {
         });
     }
 
-    public JComboBox<String> getjComboBoxCategoria() {
-        return jComboBoxCategoria;
-    }
-
-    public void setjComboBoxCategoria(JComboBox<String> jComboBoxCategoria) {
-        this.jComboBoxCategoria = jComboBoxCategoria;
-    }
-
     public JTextField getjTextFieldCodigo() {
         return jTextFieldCodigo;
     }
@@ -431,6 +422,14 @@ public class CadastrarProdutos extends javax.swing.JFrame {
         this.jTextFieldCodigo = jTextFieldCodigo;
     }
 
+    public JComboBox<String> getjComboBoxCategoria() {
+        return jComboBoxCategoria;
+    }
+
+    public void setjComboBoxCategoria(JComboBox<String> jComboBoxCategoria) {
+        this.jComboBoxCategoria = jComboBoxCategoria;
+    }
+    
     public JTextField getjTextFieldMarca() {
         return jTextFieldMarca;
     }

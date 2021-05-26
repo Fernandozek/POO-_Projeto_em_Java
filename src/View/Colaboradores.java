@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import model.Produto;
 import Dao.ProdutoDAO;
 import controller.ProdutosController;
-import dao.Conexao;
+import Dao.Conexao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;

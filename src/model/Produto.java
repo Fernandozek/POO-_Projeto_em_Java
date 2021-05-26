@@ -44,15 +44,16 @@ public class Produto {
         this.marca = marca;
     }
    
-    public Produto( String categoria, String nome, double preco, int codigo, double ml, String validade, String marca) {
+    public Produto( String categoria, String nome, double preco, double ml, double quant, String validade, String marca) {
         this.categoria = categoria;
         this.nome = nome;
         this.preco = preco;
-        this.codigo = codigo;
         this.ml = ml;
+        this.quant = quant;
         this.validade = validade;
         this.marca = marca;
     }
+   
 
     public int getId() {
         return id;

@@ -18,16 +18,16 @@ public class VendasDAO {
         this.connection = connection;
     }
     
-    public void insert(int codigo, double peso, int quantidade, int ml) throws SQLException, ParseException{
+    public void insert(String nome, double peso, int quantidade, int ml) throws SQLException, ParseException{
        
-        String sql = "insert into vendas(data,colaborador,id_produto,quantidade,peso) values(?,?,?,?,?);";
+        String sql = "insert into vendas(data,colaborador,quantidade,peso,produto) values(?,?,?,?,?);";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, "28/05/2021");
-        statement.setInt(2, 1);
-        statement.setInt(3, codigo);
-        statement.setInt(4, quantidade);
-        statement.setDouble(5, peso);
+        statement.setString(2, "João");
+        statement.setInt(3, quantidade);
+        statement.setDouble(4, peso);
+        statement.setString(5, nome);
         statement.execute();
         
     }

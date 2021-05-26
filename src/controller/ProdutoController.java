@@ -8,7 +8,7 @@ package controller;
 import Dao.ProdutoDAO;
 import View.CadastrarProdutos;
 import View.Produtos;
-import dao.Conexao;
+import Dao.Conexao;
 import model.Produto;
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -7,7 +7,7 @@ package controller;
 
 import Dao.ProdutoDAO;
 import View.EditarProduto;
-import dao.Conexao;
+import Dao.Conexao;
 import model.Produto;
 import java.sql.Connection;
 import java.text.ParseException;

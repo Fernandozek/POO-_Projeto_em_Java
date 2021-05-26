@@ -5,7 +5,7 @@ import Dao.UsuarioDAO;
 import View.LoginView;
 import View.Principal;
 import View.Colaborador;
-import dao.Conexao;
+import Dao.Conexao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;

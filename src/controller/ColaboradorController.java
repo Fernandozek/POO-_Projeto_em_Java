@@ -7,7 +7,7 @@ package controller;
 
 import Dao.ProdutoDAO;
 import View.Colaborador;
-import dao.Conexao;
+import Dao.Conexao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import model.Produto;
@@ -40,13 +40,17 @@ public class ColaboradorController {
         if(existe){
             produto = produtoDao.selectPorId(produto);
             VendasDAO venda =  new VendasDAO(conexao);
-            venda.insert(codigo,peso,quantidade,ml);
+            produto = produtoDao.selectPorId(produto);
+            venda.insert(produto.getNome(),peso,quantidade,ml);
             JOptionPane.showMessageDialog(null,"Venda efetuada com sucesso!");
         }else{
-            JOptionPane.showMessageDialog(null,"Erro");
+            JOptionPane.showMessageDialog(null,"Erro ao efetuar a venda!");
         }
         
         
     }
     
+    public void limpaCampos(){
+        view.setjTextFieldCodigo(null);
+    }
 }

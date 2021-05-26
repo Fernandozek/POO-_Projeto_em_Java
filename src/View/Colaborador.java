@@ -294,6 +294,8 @@ public class Colaborador extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
             controller.efetuarVenda();
+            this.dispose();
+            this.setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(Colaborador.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
