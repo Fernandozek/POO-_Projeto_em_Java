@@ -44,7 +44,11 @@ public class ProdutoController {
         if(quantL >0){
             quant = quantL;
         }else{
-            quant = quantU;
+            if(quantU>0){
+                quant = quantU;
+            }else{
+                quant =1;
+            }
         }
         String validade = view.getjTextFieldValidade().getText();
         String marca = view.getjTextFieldMarca().getText();

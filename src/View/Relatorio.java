@@ -5,21 +5,31 @@
  */
 package View;
 
+import Dao.Conexao;
+import Dao.VendasDAO;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import controller.RelatorioController;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import model.Relatorios;
+import java.sql.Connection;
+import model.Venda;
+import javax.swing.JOptionPane;
 /**
  *
  * @author ferna
  */
 public class Relatorio extends javax.swing.JFrame {
-
+    private final RelatorioController controller;
     /**
      * Creates new form Principal
      */
-    public Relatorio() {
+    public Relatorio() throws SQLException {
         initComponents();
+        controller = new RelatorioController(this);
+        preencherTabela();
     }
 
     /**
@@ -42,16 +52,6 @@ public class Relatorio extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jButton4 = new javax.swing.JButton();
-        jSeparator5 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
-        jLabel9 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -66,6 +66,8 @@ public class Relatorio extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TabelaRelatorio = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -170,37 +172,6 @@ public class Relatorio extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        getContentPane().add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 620, 10));
-
-        jLabel1.setText("Horário");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 270, -1, -1));
-
-        jLabel4.setText("Produto");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 270, -1, -1));
-
-        jLabel5.setText("Sabor");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 270, -1, -1));
-
-        jLabel6.setText("ML");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 270, -1, -1));
-
-        jLabel7.setText("Quant.");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 270, -1, -1));
-
-        jLabel8.setText("Valor R$");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 270, -1, -1));
-
-        jList3.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(jList3);
-
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, 620, 290));
-
-        jLabel9.setText("Colaborador");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, -1, -1));
 
         jButton5.setBackground(new java.awt.Color(0, 255, 178));
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -287,6 +258,11 @@ public class Relatorio extends javax.swing.JFrame {
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("Gerar relatório de Hoje");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 40, 200, 40));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -305,6 +281,38 @@ public class Relatorio extends javax.swing.JFrame {
         jLabel16.setForeground(new java.awt.Color(0, 198, 20));
         jLabel16.setText("R$ 0000");
         getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 590, -1, -1));
+
+        TabelaRelatorio.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Horário", "Colaborador", "Categoria", "Produto", "ML", "Quant.", "Valor"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(TabelaRelatorio);
+        if (TabelaRelatorio.getColumnModel().getColumnCount() > 0) {
+            TabelaRelatorio.getColumnModel().getColumn(0).setMinWidth(80);
+            TabelaRelatorio.getColumnModel().getColumn(0).setMaxWidth(80);
+            TabelaRelatorio.getColumnModel().getColumn(3).setMinWidth(120);
+            TabelaRelatorio.getColumnModel().getColumn(3).setMaxWidth(120);
+            TabelaRelatorio.getColumnModel().getColumn(4).setMinWidth(50);
+            TabelaRelatorio.getColumnModel().getColumn(4).setMaxWidth(50);
+            TabelaRelatorio.getColumnModel().getColumn(5).setMinWidth(45);
+            TabelaRelatorio.getColumnModel().getColumn(5).setMaxWidth(45);
+            TabelaRelatorio.getColumnModel().getColumn(6).setMinWidth(65);
+            TabelaRelatorio.getColumnModel().getColumn(6).setMaxWidth(65);
+        }
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 620, 320));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -333,10 +341,14 @@ public class Relatorio extends javax.swing.JFrame {
             p.setVisible(true);
         this.dispose();
         } catch (SQLException ex) {
-            Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Relatorios.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        controller.gerarRelatorio();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -355,14 +367,18 @@ public class Relatorio extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Relatorios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Relatorios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Relatorios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Relatorios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -371,19 +387,53 @@ public class Relatorio extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Relatorio().setVisible(true);
+                try {
+                    Relatorio telaA = new Relatorio();
+                    telaA.setVisible(true);
+                    preencherTabela();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
+    public static void preencherTabela() throws SQLException{
+        DefaultTableModel model = (DefaultTableModel) TabelaRelatorio.getModel();
+        model.setNumRows(0);
+        
+        Object colunas[] = new Object[7];
+        
+        Venda venda = new Venda("", "", "", 0, "", 0);
+        ArrayList<Venda> listaDeVendas = new ArrayList<Venda>();
+        Connection conexao = new Conexao().getConnection();
+        VendasDAO vendaDao = new VendasDAO(conexao);
+        listaDeVendas = vendaDao.selectAll();
+        
+        
+        
+        for(int i = 0;i<listaDeVendas.size();i++){
+            
+            venda = listaDeVendas.get(i);
+            colunas[0] = "19:45";
+            colunas[1] = venda.getColaborador();
+            colunas[2] = "Sorvete";
+            colunas[3] = venda.getProduto();
+            colunas[4] = 300;
+            colunas[5] = venda.getQuantidade();
+            colunas[6] = venda.getValor();
+            model.addRow(colunas);
+        }
+        
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private static javax.swing.JTable TabelaRelatorio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -393,24 +443,16 @@ public class Relatorio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

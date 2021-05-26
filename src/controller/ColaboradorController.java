@@ -41,7 +41,7 @@ public class ColaboradorController {
             produto = produtoDao.selectPorId(produto);
             VendasDAO venda =  new VendasDAO(conexao);
             produto = produtoDao.selectPorId(produto);
-            venda.insert(produto.getNome(),peso,quantidade,ml);
+            venda.insert(produto.getNome(),produto.getPreco(),peso,quantidade,ml);
             JOptionPane.showMessageDialog(null,"Venda efetuada com sucesso!");
         }else{
             JOptionPane.showMessageDialog(null,"Erro ao efetuar a venda!");

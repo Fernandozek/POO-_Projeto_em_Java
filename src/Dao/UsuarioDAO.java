@@ -29,19 +29,20 @@ public class UsuarioDAO {
         
     }
 
-    public void update (Usuario usuario) throws SQLException{
-        String sql = "update usuario set login = ?, senha = ? where id_usuario = ?";
+    public void update (Usuario usuario, int id) throws SQLException{
+        String sql = "update usuario set nome = ?, login = ?, senha = ? where id_usuario = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         
-        statement.setString(1, usuario.getLogin());
-        statement.setString(2, usuario.getSenha());
-        statement.setInt(3, usuario.getId());
+        statement.setString(1, usuario.getNome());
+        statement.setString(2, usuario.getLogin());
+        statement.setString(3, usuario.getSenha());
+        statement.setInt(4, id);
         statement.execute();
     }
     
     public void insertOrUpdate(Usuario usuario) throws SQLException{
         if(usuario.getId() > 0){
-            update(usuario);
+            update(usuario,2);
         }else{
             insert(usuario);
         }

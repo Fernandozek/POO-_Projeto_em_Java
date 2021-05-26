@@ -8,7 +8,7 @@ package View;
 import javax.swing.JOptionPane;
 import Dao.ColaboradorDAO;
 import controller.FormColaboradorController;
-import dao.Conexao;
+import Dao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -344,9 +344,15 @@ public class CadastrarColaborador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Relatorio r = new Relatorio();
-        r.setVisible(true);
-        this.dispose();
+        Relatorio r;
+        try {
+            r = new Relatorio();
+            r.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastrarColaborador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
