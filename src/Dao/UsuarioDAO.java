@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Usuario;
 
+
 public class UsuarioDAO {
     
     private final Connection connection;
@@ -72,10 +73,11 @@ public class UsuarioDAO {
         
         while(resultSet.next()){
             int id = resultSet.getInt("id_usuario");
+            String nome = resultSet.getString("nome");
             String login = resultSet.getString("login");
             String senha = resultSet.getString("senha");
             
-            Usuario usuarioComDadosDoBanco = new Usuario(id, login, senha);
+            Usuario usuarioComDadosDoBanco = new Usuario(nome, login, senha);
             usuarios.add(usuarioComDadosDoBanco);
         }
         

@@ -5,19 +5,20 @@
  */
 package View;
 
+import Dao.ColaboradorDAO;
 import java.util.ArrayList;
 import javax.swing.JList;
 import javax.swing.table.DefaultTableModel;
-import model.Produto;
-import Dao.ProdutoDAO;
 import controller.ProdutosController;
 import Dao.Conexao;
+import Dao.UsuarioDAO;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import model.Colaborador;
+import model.Usuario;
 /**
  *
  * @author ferna
@@ -26,8 +27,9 @@ public class Colaboradores extends javax.swing.JFrame {
     /**
      * Creates new form Principal
      */
-    public Colaboradores() {
+    public Colaboradores() throws SQLException {
         initComponents();
+        preencherTabela();
     }
 
     /**
@@ -54,7 +56,7 @@ public class Colaboradores extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TabelaProdutos = new javax.swing.JTable();
+        TabelaColaboradores = new javax.swing.JTable();
         jButtonExcluir = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
 
@@ -190,7 +192,7 @@ public class Colaboradores extends javax.swing.JFrame {
         });
         getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 60, 230, 40));
 
-        TabelaProdutos.setModel(new javax.swing.table.DefaultTableModel(
+        TabelaColaboradores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -206,12 +208,12 @@ public class Colaboradores extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(TabelaProdutos);
-        if (TabelaProdutos.getColumnModel().getColumnCount() > 0) {
-            TabelaProdutos.getColumnModel().getColumn(1).setMinWidth(220);
-            TabelaProdutos.getColumnModel().getColumn(1).setMaxWidth(220);
-            TabelaProdutos.getColumnModel().getColumn(2).setMinWidth(100);
-            TabelaProdutos.getColumnModel().getColumn(2).setMaxWidth(100);
+        jScrollPane1.setViewportView(TabelaColaboradores);
+        if (TabelaColaboradores.getColumnModel().getColumnCount() > 0) {
+            TabelaColaboradores.getColumnModel().getColumn(1).setMinWidth(220);
+            TabelaColaboradores.getColumnModel().getColumn(1).setMaxWidth(220);
+            TabelaColaboradores.getColumnModel().getColumn(2).setMinWidth(100);
+            TabelaColaboradores.getColumnModel().getColumn(2).setMaxWidth(100);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, 620, -1));
@@ -220,6 +222,11 @@ public class Colaboradores extends javax.swing.JFrame {
         jButtonExcluir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonExcluir.setForeground(new java.awt.Color(255, 255, 255));
         jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButtonExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, 140, 30));
 
         jButtonEditar.setBackground(new java.awt.Color(119, 1, 100));
@@ -243,9 +250,15 @@ public class Colaboradores extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Colaboradores col = new Colaboradores();
-        col.setVisible(true);
-        this.dispose();
+        Colaboradores col;
+        try {
+            col = new Colaboradores();
+            col.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(Colaboradores.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -293,6 +306,12 @@ public class Colaboradores extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+        ExcluirColaborador ec = new ExcluirColaborador();
+        ec.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -326,8 +345,14 @@ public class Colaboradores extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Colaboradores telaA = new Colaboradores();
-                telaA.setVisible(true);
+                Colaboradores telaA;
+                try {
+                    telaA = new Colaboradores();
+                    telaA.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Colaboradores.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
                 
                 try {
                     preencherTabela();
@@ -339,26 +364,33 @@ public class Colaboradores extends javax.swing.JFrame {
     }
     
     public static void preencherTabela() throws SQLException{
-        DefaultTableModel model = (DefaultTableModel) TabelaProdutos.getModel();
+        DefaultTableModel model = (DefaultTableModel) TabelaColaboradores.getModel();
         model.setNumRows(0);
         
-        Object colunas[] = new Object[6];
+        Object colunas[] = new Object[3];
         
-        Produto produto = new Produto("", "", 0, 0, 0, 0, "", "");
-        ArrayList<Produto> listaDeProdutos = new ArrayList<Produto>();
+        Colaborador colaborador = new Colaborador("","","");
+        Usuario usuario = new Usuario("", "", "");
+                
+        ArrayList<Colaborador> listaDeColaboradores = new ArrayList<Colaborador>();
+        ArrayList<Usuario> listaDeUsuarios = new ArrayList<Usuario>();
+        
         Connection conexao = new Conexao().getConnection();
-        ProdutoDAO produtoDao = new ProdutoDAO(conexao);
-        listaDeProdutos = produtoDao.selectAll();
+        ColaboradorDAO colaboradorDao = new ColaboradorDAO(conexao);
+        UsuarioDAO usuarioDao = new UsuarioDAO(conexao); 
         
-        for(int i = 0;i<listaDeProdutos.size();i++){
+        listaDeColaboradores = colaboradorDao.selectAll();
+        listaDeUsuarios = usuarioDao.selectAll();
+        
+        
+        for(int i = 0;i<listaDeUsuarios.size()-1;i++){
+            usuario = listaDeUsuarios.get(i+1);
+            colaborador = listaDeColaboradores.get(i);
             
-            produto = listaDeProdutos.get(i);
-            colunas[0] = produto.getCategoria();
-            colunas[1] = produto.getNome();
-            colunas[2] = produto.getCodigo();
-            colunas[3] = produto.getValidade();
-            colunas[4] = produto.getQuant();
-            colunas[5] = produto.getPreco();
+            colunas[0] = usuario.getNome();
+            colunas[1] = colaborador.getEmail();
+            colunas[2] = colaborador.getCelular();
+            
             
             model.addRow(colunas);
         }
@@ -366,7 +398,7 @@ public class Colaboradores extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JTable TabelaProdutos;
+    public static javax.swing.JTable TabelaColaboradores;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

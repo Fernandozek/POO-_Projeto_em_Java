@@ -356,9 +356,15 @@ public class CadastrarColaborador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Colaboradores col = new Colaboradores();
-        col.setVisible(true);
-        this.dispose();
+        Colaboradores col;
+        try {
+            col = new Colaboradores();
+            col.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastrarColaborador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

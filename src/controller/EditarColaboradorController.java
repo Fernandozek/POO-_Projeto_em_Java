@@ -26,13 +26,21 @@ public class EditarColaboradorController {
         String nome = view.getjTextFieldNome().getText();
         String login = view.getjTextFieldLogin().getText();
         String senha = view.getjPasswordFieldSenha().getText();
-        int id = Integer.parseInt(view.getjTextFieldCodigo().getText());
+        String email = view.getjTextFieldEmail().getText();
+        String cpf = view.getjTextFieldCpf().getText();
+        String celular = view.getjTextFieldCelular().getText();
+        
+        int id = Integer.parseInt(view.getjTextFieldId().getText());
         Usuario usuario = new Usuario(nome, login, senha);
+        Colaborador colaborador = new Colaborador(cpf, email, celular);
         
         if(id>1){
             try {
             Connection conexaoUser = new Conexao().getConnection();
             UsuarioDAO usuarioDao = new UsuarioDAO(conexaoUser);
+            ColaboradorDAO colaboradorDao = new ColaboradorDAO(conexaoUser);
+            
+            colaboradorDao.update(colaborador, id);
             usuarioDao.update(usuario,id);
             
             JOptionPane.showMessageDialog(null, "Colaborador Editado com sucesso!");

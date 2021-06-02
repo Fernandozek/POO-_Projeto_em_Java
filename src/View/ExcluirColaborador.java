@@ -5,27 +5,26 @@
  */
 package View;
 
-import controller.ProdutoController;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import View.Produtos;
-import controller.ExcluirProdutoController;
+import controller.ExcluirColaboradorController;
 import java.sql.SQLException;
 /**
  *
  * @author jorge
  */
-public class ExcluirProduto extends javax.swing.JFrame {
-    private final ExcluirProdutoController controller;
+public class ExcluirColaborador extends javax.swing.JFrame {
+    private final ExcluirColaboradorController controller;
     /**
      * Creates new form CadastrarProdutos
      */
-    public ExcluirProduto() {
+    public ExcluirColaborador() {
         initComponents();
-        controller = new ExcluirProdutoController(this);
+        controller = new ExcluirColaboradorController(this);
     }
 
     /**
@@ -227,9 +226,8 @@ public class ExcluirProduto extends javax.swing.JFrame {
         try {
             col = new Colaboradores();
             col.setVisible(true);
-            this.dispose();
         } catch (SQLException ex) {
-            Logger.getLogger(ExcluirProduto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExcluirColaborador.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -237,11 +235,11 @@ public class ExcluirProduto extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         
         try {
-            controller.excluirProduto();
+            controller.excluirColaborador();
         } catch (SQLException ex) {
-            Logger.getLogger(ExcluirProduto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExcluirColaborador.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
-            Logger.getLogger(ExcluirProduto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExcluirColaborador.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -258,7 +256,7 @@ public class ExcluirProduto extends javax.swing.JFrame {
             p.setVisible(true);
             this.dispose();
         } catch (SQLException ex) {
-            Logger.getLogger(ExcluirProduto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExcluirColaborador.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -270,7 +268,7 @@ public class ExcluirProduto extends javax.swing.JFrame {
             r.setVisible(true);
             this.dispose();
         } catch (SQLException ex) {
-            Logger.getLogger(ExcluirProduto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExcluirColaborador.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -292,14 +290,18 @@ public class ExcluirProduto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ExcluirProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExcluirColaborador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ExcluirProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExcluirColaborador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ExcluirProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExcluirColaborador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ExcluirProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExcluirColaborador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -308,7 +310,7 @@ public class ExcluirProduto extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ExcluirProduto().setVisible(true);
+                new ExcluirColaborador().setVisible(true);
             }
         });
     }

@@ -36,7 +36,6 @@ public class ProdutoController {
         String categoria = view.getjComboBoxCategoria().getSelectedItem().toString();
         String nome = view.getjTextFieldNome().getText();
         double preco = Double.parseDouble(view.getjTextFieldPreco().getText());
-        int codigo = Integer.parseInt(view.getjTextFieldCodigo().getText());
         int ml = Integer.parseInt(view.getjTextFieldMl().getText());
         double quant;
         double quantL = Double.parseDouble(view.getjTextFieldQuantL().getText());
@@ -53,7 +52,7 @@ public class ProdutoController {
         String validade = view.getjTextFieldValidade().getText();
         String marca = view.getjTextFieldMarca().getText();
         
-        Produto produto = new Produto(categoria, nome, preco, codigo, ml, quant, validade, marca);
+        Produto produto = new Produto(categoria, nome, preco, ml, quant, validade, marca);
         
         try {
             Connection conexao = new Conexao().getConnection();
